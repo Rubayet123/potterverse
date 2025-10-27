@@ -12,12 +12,15 @@
   <!-- Sparkling Stars Background -->
   <div class="stars"></div>
 
+  <!-- Spell Casting Effect Container -->
+  <div class="spell-effect hidden"></div>
+
   <!-- Navigation Bar -->
   <nav class="bg-gray-900/80 backdrop-blur-md p-4 sticky top-0 z-10 shadow-lg">
     <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
       <h1 class="text-2xl font-bold text-yellow-400 mb-2 sm:mb-0">PotterVerse</h1>
       <div class="flex flex-wrap justify-center sm:justify-end space-x-2">
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="home">Home</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="home" style="margin-left: -10px; margin-right: 5px;">Home</button>
         <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="books">Books</button>
         <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="characters">Characters</button>
         <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="houses">Houses</button>
@@ -35,7 +38,7 @@
         <p class="text-lg sm:text-xl mb-6 text-gray-300 animate-fade-in-delay">Dive into the magical world of Harry Potter! Explore books, characters, houses, and spells in an interactive experience designed for fans.</p>
         <button class="px-6 py-3 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition transform hover:scale-110 animate-pulse-slow magic-glow" onclick="loadSection('books')">Start Exploring</button>
         <div class="mt-6 sm:mt-8">
-          <img src="https://m.media-amazon.com/images/I/61jjP117USL.jpg" alt="Hogwarts Castle" class="mx-auto w-full sm:w-3/4 md:w-1/2 rounded-lg shadow-lg animate-hover-glow">
+          <img src="assets/images/hogwarts-castle.jpg" alt="Hogwarts Castle" class="mx-auto w-full sm:w-3/4 md:w-1/2 rounded-lg shadow-lg animate-hover-glow">
         </div>
       </div>
     </section>
@@ -53,7 +56,7 @@
 
   <!-- Footer -->
   <footer class="bg-gray-900/80 backdrop-blur-md p-4 text-center">
-    <p>&copy; 2025 PotterVerse. Powered by <a href="https://rubayet123.github.io" class="text-yellow-400 hover:underline" target="_blank">rubayet123.github.io</a></p>
+    <p>&copy; 2025 PotterVerse. Powered by <a href="https://github.com/fedeperin/potterapi" class="text-yellow-400 hover:underline" target="_blank">PotterAPI</a>.</p>
   </footer>
 
   <script src="js/app.js"></script>

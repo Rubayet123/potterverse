@@ -33,7 +33,7 @@ function renderContent(data, section) {
 
     if (section === 'books') {
       card.innerHTML = `
-        <img src="${item.cover || 'https://via.placeholder.com/150'}" alt="${item.title}" class="w-full object-contain rounded-t-lg">
+        <img src="${item.cover || 'https://via.placeholder.com/150'}" alt="${item.title}" class="w-full object-contain rounded-t-lg max-h-64">
         <div class="p-4">
           <h2 class="text-xl font-bold text-yellow-400">${item.title}</h2>
           <p><strong>Original:</strong> ${item.originalTitle}</p>

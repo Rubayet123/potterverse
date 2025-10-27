@@ -8,36 +8,48 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" href="assets/images/favicon.ico">
 </head>
-<body class="bg-gray-900 text-white font-sans">
+<body class="bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white font-sans">
   <!-- Navigation Bar -->
-  <nav class="bg-gray-800 p-4 sticky top-0 z-10 shadow-lg">
+  <nav class="bg-gray-900/80 backdrop-blur-md p-4 sticky top-0 z-10 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold text-yellow-400">PotterVerse</h1>
       <div class="space-x-4">
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded hover:bg-yellow-600" data-section="books">Books</button>
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded hover:bg-yellow-600" data-section="characters">Characters</button>
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded hover:bg-yellow-600" data-section="houses">Houses</button>
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded hover:bg-yellow-600" data-section="spells">Spells</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="home">Home</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="books">Books</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="characters">Characters</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="houses">Houses</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="spells">Spells</button>
       </div>
     </div>
   </nav>
 
   <!-- Main Content -->
   <main class="container mx-auto p-6">
-    <!-- Search and Random Buttons -->
-    <div class="flex justify-between items-center mb-6">
-      <input type="text" id="searchInput" class="w-1/2 p-2 rounded bg-gray-700 text-white" placeholder="Search...">
-      <button id="randomBtn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">Random</button>
-    </div>
-
-    <!-- Content Area -->
-    <section id="content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Dynamic content will be injected here -->
+    <!-- Homepage Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center text-center hidden">
+      <div class="bg-gray-800/80 backdrop-blur-md p-10 rounded-lg shadow-2xl">
+        <h1 class="text-5xl font-bold mb-4 text-yellow-400 animate-fade-in">Welcome to PotterVerse</h1>
+        <p class="text-xl mb-6 text-gray-300">Dive into the magical world of Harry Potter! Explore books, characters, houses, and spells with an interactive experience designed for fans.</p>
+        <button class="px-6 py-3 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition transform hover:scale-105" onclick="loadSection('books')">Start Exploring</button>
+        <div class="mt-8">
+          <img src="assets/images/hogwarts-castle.jpg" alt="Hogwarts Castle" class="mx-auto w-3/4 md:w-1/2 rounded-lg shadow-lg">
+        </div>
+      </div>
     </section>
+
+    <!-- Search and Content Area -->
+    <div id="content-container" class="hidden">
+      <div class="flex justify-start items-center mb-6">
+        <input type="text" id="searchInput" class="w-full md:w-1/2 p-3 rounded-lg bg-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition" placeholder="Search books, characters, houses, or spells...">
+      </div>
+      <section id="content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Dynamic content will be injected here -->
+      </section>
+    </div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-800 p-4 text-center">
+  <footer class="bg-gray-900/80 backdrop-blur-md p-4 text-center">
     <p>&copy; 2025 PotterVerse. Powered by <a href="https://github.com/fedeperin/potterapi" class="text-yellow-400 hover:underline" target="_blank">PotterAPI</a>.</p>
   </footer>
 

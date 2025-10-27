@@ -33,7 +33,7 @@ function renderContent(data, section) {
 
     if (section === 'books') {
       card.innerHTML = `
-        <img src="${item.cover || 'https://via.placeholder.com/150'}" alt="${item.title}" class="w-full h-48 object-cover rounded-t-lg">
+        <img src="${item.cover || 'https://via.placeholder.com/150'}" alt="${item.title}" class="w-full object-contain rounded-t-lg">
         <div class="p-4">
           <h2 class="text-xl font-bold text-yellow-400">${item.title}</h2>
           <p><strong>Original:</strong> ${item.originalTitle}</p>
@@ -43,7 +43,7 @@ function renderContent(data, section) {
       `;
     } else if (section === 'characters') {
       card.innerHTML = `
-        <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.fullName}" class="w-full h-48 object-cover rounded-t-lg">
+        <img src="${item.image || 'https://via.placeholder.com/150'}" alt="${item.fullName}" class="w-full object-contain rounded-t-lg max-h-64">
         <div class="p-4">
           <h2 class="text-xl font-bold text-yellow-400">${item.fullName}</h2>
           <p><strong>House:</strong> ${item.hogwartsHouse || 'N/A'}</p>

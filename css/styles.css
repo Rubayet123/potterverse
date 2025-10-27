@@ -4,6 +4,42 @@ body {
   background-position: center;
   background-attachment: fixed;
   overflow-x: hidden;
+  position: relative;
+}
+
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stars::before,
+.stars::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 215, 0, 0.8);
+  border-radius: 50%;
+  animation: sparkle 2s infinite alternate;
+}
+
+.stars::before {
+  width: 2px;
+  height: 2px;
+  top: 20%;
+  left: 30%;
+  animation-delay: 0s;
+}
+
+.stars::after {
+  width: 3px;
+  height: 3px;
+  top: 70%;
+  left: 70%;
+  animation-delay: 1s;
 }
 
 .card {
@@ -12,8 +48,16 @@ body {
   border-radius: 1rem;
   overflow: hidden;
   position: relative;
-  border: 1px solid rgba(255, 215, 0, 0.2); /* Subtle golden border */
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  animation: cardReveal 0.5s ease-out backwards;
+  animation-fill-mode: backwards;
 }
+
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(4) { animation-delay: 0.3s; }
+.card:nth-child(5) { animation-delay: 0.4s; }
+.card:nth-child(6) { animation-delay: 0.5s; }
 
 .card img {
   width: 100%;
@@ -24,7 +68,7 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3); /* Golden glow on hover */
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.3);
 }
 
 .card::before {
@@ -52,7 +96,18 @@ body {
 .nav-btn:hover {
   transform: scale(1.05);
   filter: brightness(1.2);
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); /* Glow effect */
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.shimmer {
+  background: linear-gradient(120deg, #1f2937 30%, #ffeb3b 50%, #1f2937 70%);
+  background-size: 200% 100%;
+  animation: shimmer 5s infinite;
+}
+
+.magic-glow {
+  box-shadow: 0 0 10px #ffeb3b, 0 0 20px #ff9800, 0 0 30px #ffeb3b;
+  animation: magicGlow 3s infinite;
 }
 
 .animate-fade-in {
@@ -73,6 +128,27 @@ body {
 
 .animate-hover-glow {
   animation: hoverGlow 4s infinite;
+}
+
+@keyframes sparkle {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.5); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes cardReveal {
+  0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes magicGlow {
+  0% { box-shadow: 0 0 5px #ffeb3b, 0 0 10px #ff9800, 0 0 15px #ffeb3b; }
+  50% { box-shadow: 0 0 15px #ffeb3b, 0 0 25px #ff9800, 0 0 35px #ffeb3b; }
+  100% { box-shadow: 0 0 5px #ffeb3b, 0 0 10px #ff9800, 0 0 15px #ffeb3b; }
 }
 
 @keyframes fadeIn {
@@ -102,4 +178,20 @@ img {
 
 img:hover {
   transform: scale(1.05);
+}
+
+/* Wand Trail Effect */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="%23ffeb3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 22l10-8 10 8-10-20z"/></svg>'), auto;
+}
+
+.wand-trail {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #ffeb3b 10%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: wandTrail 0.5s ease-out;
+  z-index: 20;
 }

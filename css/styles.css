@@ -12,6 +12,13 @@ body {
   overflow: hidden;
 }
 
+.card img {
+  width: 100%;
+  height: auto; /* Allows natural height based on width */
+  object-fit: contain; /* Ensures full image is visible */
+  display: block; /* Removes any inline spacing issues */
+}
+
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);

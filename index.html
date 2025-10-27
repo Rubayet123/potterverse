@@ -1,64 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PotterVerse - Explore the Wizarding World</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="icon" href="assets/images/favicon.ico">
+
+  <!-- Tailwind CDN (v2) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <style>
+    /* ==== HARRY POTTER THEME ==== */
+    :root {
+      --gold: #ffeb3b;
+      --dark-gold: #b8860b;
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+    }
+
+    body {
+      background: linear-gradient(to bottom, #0a0e17, #1e293b), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230a0e17"/><path fill="%23ffffff08" d="M0 0h10v10H0zM20 20h10v10H20zM40 10h10v10H40zM60 30h10v10H60zM80 0h10v10H80zM10 40h10v10H10zM30 60h10v10H30zM50 80h10v10H50zM70 50h10v10H70zM90 70h10v10H90z"/></svg>') repeat;
+      background-attachment: fixed;
+      color: #e2e8f0;
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+      position: relative;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="%23ffeb3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 22l10-8 10 8-10-20z"/></svg>'), auto;
+    }
+
+    /* Sparkling Stars */
+    .stars {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle 3s infinite alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 0.8; transform: scale(1.5); }
+    }
+
+    /* Spell Effect */
+    .spell-effect {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 50;
+      overflow: hidden;
+    }
+    .spell-beam {
+      position: absolute;
+      width: 3px;
+      height: 0;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      filter: drop-shadow(0 0 8px var(--gold));
+      animation: castSpell 0.9s ease-out forwards;
+    }
+    @keyframes castSpell {
+      0% { height: 0; }
+      50% { height: 300px; }
+      100% { height: 0; opacity: 0; }
+    }
+
+    /* Card Styles */
+    .card {
+      background: var(--card-bg);
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,215,0,0.2);
+      transition: all 0.3s ease;
+      animation: floatCard 6s ease-in-out infinite;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(255,215,0,0.25);
+      border-color: var(--gold);
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      filter: blur(12px);
+      transition: opacity 0.3s;
+      z-index: -1;
+    }
+    .card:hover::before { opacity: 0.6; }
+
+    .card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      object-position: top;
+      background: #111;
+      transition: transform 0.4s ease;
+    }
+    .card:hover img { transform: scale(1.05); }
+
+    .card-content {
+      padding: 1rem;
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    .card p { margin: 0.25rem 0; font-size: 0.95rem; }
+
+    /* Animations */
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-card { animation: fadeInUp 0.6s ease-out forwards; }
+
+    /* Nav Glow */
+    .nav-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: all 0.3s;
+      transform: translateX(-50%);
+    }
+    .nav-btn:hover::after { width: 100%; }
+
+    /* Wand Trail */
+    .wand-trail {
+      position: absolute;
+      width: 8px; height: 8px;
+      background: radial-gradient(circle, var(--gold) 20%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 40;
+      opacity: 0;
+      animation: trailFade 0.6s ease-out forwards;
+    }
+    @keyframes trailFade {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+
+    /* Shimmer Hero */
+    .shimmer {
+      background: linear-gradient(120deg, #1e293b 30%, #ffeb3b20 50%, #1e293b 70%);
+      background-size: 200% 100%;
+      animation: shimmer 4s infinite;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .card img { height: 240px; }
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white font-sans overflow-x-hidden relative">
-  <!-- Sparkling Stars Background -->
-  <div class="stars"></div>
+<body class="relative min-h-screen">
 
-  <!-- Spell Casting Effect Container -->
-  <div class="spell-effect hidden"></div>
+  <!-- Sparkling Stars -->
+  <div class="stars" id="stars"></div>
 
-  <!-- Navigation Bar -->
-  <nav class="bg-gray-900/80 backdrop-blur-md p-4 sticky top-0 z-10 shadow-lg">
-    <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
-      <h1 class="text-2xl font-bold text-yellow-400 mb-2 sm:mb-0">PotterVerse</h1>
-      <div class="flex flex-wrap justify-center sm:justify-end space-x-2">
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="home" style="margin-left: -10px; margin-right: 5px;">Home</button>
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="books">Books</button>
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="characters">Characters</button>
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="houses">Houses</button>
-        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition" data-section="spells">Spells</button>
+  <!-- Spell Effect Overlay -->
+  <div class="spell-effect hidden" id="spellEffect"></div>
+
+  <!-- Navigation -->
+  <nav class="bg-gray-900/90 backdrop-blur-md p-4 sticky top-0 z-40 shadow-xl">
+    <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+      <h1 class="text-2xl font-bold text-yellow-400">PotterVerse</h1>
+      <div class="flex flex-wrap justify-center gap-2">
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-400 transition font-medium" data-section="home">Home</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-400 transition font-medium" data-section="books">Books</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-400 transition font-medium" data-section="characters">Characters</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-400 transition font-medium" data-section="houses">Houses</button>
+        <button class="nav-btn px-4 py-2 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-400 transition font-medium" data-section="spells">Spells</button>
       </div>
     </div>
   </nav>
 
   <!-- Main Content -->
   <main class="container mx-auto p-4 sm:p-6 relative z-10">
-    <!-- Homepage Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center text-center animate-fade-in">
-      <div class="bg-gray-800/70 backdrop-blur-md p-6 sm:p-10 rounded-lg shadow-2xl transform hover:scale-105 transition duration-500 shimmer">
-        <h1 class="text-4xl sm:text-5xl font-bold mb-4 text-yellow-400 animate-float">Welcome to PotterVerse</h1>
-        <p class="text-lg sm:text-xl mb-6 text-gray-300 animate-fade-in-delay">Dive into the magical world of Harry Potter! Explore books, characters, houses, and spells in an interactive experience designed for fans.</p>
-        <button class="px-6 py-3 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-600 transition transform hover:scale-110 animate-pulse-slow magic-glow" onclick="loadSection('books')">Start Exploring</button>
-        <div class="mt-6 sm:mt-8">
-          <img src="https://m.media-amazon.com/images/I/61jjP117USL.jpg" alt="Hogwarts Castle" class="mx-auto w-full sm:w-3/4 md:w-1/2 rounded-lg shadow-lg animate-hover-glow">
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center text-center">
+      <div class="bg-gray-800/70 backdrop-blur-lg p-8 sm:p-12 rounded-2xl shadow-2xl max-w-4xl mx-auto shimmer">
+        <h1 class="text-4xl sm:text-6xl font-bold mb-4 text-yellow-400 animate-float">Welcome to PotterVerse</h1>
+        <p class="text-lg sm:text-xl mb-8 text-gray-300">Explore the magical world of Harry Potter with interactive cards, spells, and secrets.</p>
+        <button onclick="loadSection('books')" class="px-8 py-3 bg-yellow-500 text-gray-900 rounded-lg hover:bg-yellow-400 transition transform hover:scale-110 font-bold shadow-lg">
+          Start Exploring
+        </button>
+        <div class="mt-10">
+          <img src="https://m.media-amazon.com/images/I/61jjP117USL.jpg" alt="Hogwarts" loading="lazy"
+               class="mx-auto w-full max-w-2xl rounded-xl shadow-2xl hover:shadow-yellow-500/50 transition">
         </div>
       </div>
     </section>
 
-    <!-- Search and Content Area -->
-    <div id="content-container" class="hidden">
-      <div class="flex justify-start items-center mb-6">
-        <input type="text" id="searchInput" class="w-full sm:w-1/2 p-3 rounded-lg bg-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition" placeholder="Search books, characters, houses, or spells...">
+    <!-- Search & Content -->
+    <div id="content-container" class="hidden space-y-6">
+      <input type="text" id="searchInput" placeholder="Search..." 
+             class="w-full p-3 rounded-lg bg-gray-700/70 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition">
+
+      <div id="content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Cards injected here -->
       </div>
-      <section id="content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Dynamic content will be injected here -->
-      </section>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gray-900/80 backdrop-blur-md p-4 text-center">
-    <p>&copy; 2025 PotterVerse. Developed by <a href="https://rubayet123.github.io" class="text-yellow-400 hover:underline" target="_blank">Rubayet Alam</a>.</p>
+  <footer class="bg-gray-900/80 backdrop-blur-md p-6 text-center mt-16">
+    <p>© 2025 PotterVerse. Made with magic by <a href="https://rubayet123.github.io" target="_blank" class="text-yellow-400 hover:underline">Rubayet Alam</a></p>
   </footer>
 
-  <script src="js/app.js"></script>
+  <!-- JavaScript -->
+  <script>
+    const API = 'https://potterapi-fedeperin.vercel.app/en';
+    const content = document.getElementById('content');
+    const searchInput = document.getElementById('searchInput');
+    const home = document.getElementById('home');
+    const container = document.getElementById('content-container');
+    const spellEffect = document.getElementById('spellEffect');
+    let currentSection = 'home';
+    let trail = null;
+
+    // === Create Stars ===
+    const starsDiv = document.getElementById('stars');
+    for (let i = 0; i < 60; i++) {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      starsDiv.appendChild(star);
+    }
+
+    // === Fetch Data ===
+    async function fetchData(section, query = '') {
+      try {
+        let url = `${API}/${section}`;
+        if (query) url += `?search=${encodeURIComponent(query)}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Network error');
+        return await res.json();
+      } catch (err) {
+        content.innerHTML = `<p class="text-red-400 col-span-full text-center">Failed to load data. Try again later.</p>`;
+        return [];
+      }
+    }
+
+    // === Render Cards ===
+    function renderContent(data, section) {
+      content.innerHTML = '';
+      if (!data || data.length === 0) {
+        content.innerHTML = '<p class="col-span-full text-center text-gray-400">No results found.</p>';
+        return;
+      }
+
+      data.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.className = 'card animate-card';
+        card.style.animationDelay = `${i * 0.1}s`;
+
+        let imgSrc = 'https://via.placeholder.com/300x400/1a1a1a/ffffff?text=No+Image';
+        let imgAlt = 'Item';
+
+        if (section === 'books') {
+          imgSrc = item.cover || imgSrc;
+          imgAlt = item.title;
+        } else if (section === 'characters') {
+          imgSrc = item.image || imgSrc;
+          imgAlt = item.fullName;
+        }
+
+        let details = '';
+        if (section === 'books') {
+          details = `
+            <h3>${item.title}</h3>
+            <p><strong>Original:</strong> ${item.originalTitle}</p>
+            <p><strong>#${item.number}</strong> • ${item.pages} pages</p>
+            <p><strong>Released:</strong> ${item.releaseDate}</p>
+            <p class="text-sm mt-2 text-gray-300">${item.description?.slice(0,120)}...</p>
+          `;
+        } else if (section === 'characters') {
+          details = `
+            <h3>${item.fullName}</h3>
+            <p><strong>House:</strong> ${item.hogwartsHouse || 'Unknown'}</p>
+            <p><strong>Actor:</strong> ${item.interpretedBy || 'N/A'}</p>
+            <p><strong>Born:</strong> ${item.birthdate || 'N/A'}</p>
+          `;
+        } else if (section === 'houses') {
+          details = `
+            <div class="text-center py-4">
+              <h3 class="text-2xl">${item.house} ${item.emoji}</h3>
+              <p><strong>Founder:</strong> ${item.founder}</p>
+              <p><strong>Colors:</strong> ${item.colors?.join(', ')}</p>
+              <p><strong>Animal:</strong> ${item.animal}</p>
+            </div>
+          `;
+          imgSrc = ''; // No image for houses
+        } else if (section === 'spells') {
+          details = `
+            <h3>${item.spell}</h3>
+            <p class="italic">"${item.use}"</p>
+          `;
+          imgSrc = '';
+        }
+
+        card.innerHTML = `
+          ${imgSrc ? `<img src="${imgSrc}" alt="${imgAlt}" loading="lazy">` : ''}
+          <div class="card-content">${details}</div>
+        `;
+
+        // Spell cast on click
+        card.addEventListener('click', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = rect.left + rect.width / 2;
+          const y = rect.top;
+          castSpell(x, y);
+        });
+
+        content.appendChild(card);
+      });
+    }
+
+    // === Load Section ===
+    async function loadSection(section) {
+      currentSection = section;
+      home.classList.add('hidden');
+      container.classList.remove('hidden');
+
+      if (section === 'home') {
+        home.classList.remove('hidden');
+        container.classList.add('hidden');
+        return;
+      }
+
+      const data = await fetchData(section);
+      renderContent(data, section);
+    }
+
+    // === Search ===
+    searchInput.addEventListener('input', async () => {
+      const q = searchInput.value.trim();
+      if (currentSection !== 'home') {
+        const data = await fetchData(currentSection, q);
+        renderContent(data, currentSection);
+      }
+    });
+
+    // === Nav Buttons ===
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('bg-yellow-400'));
+        btn.classList.add('bg-yellow-400');
+        loadSection(btn.dataset.section);
+        searchInput.value = '';
+        const rect = btn.getBoundingClientRect();
+        castSpell(rect.left + rect.width / 2, rect.bottom);
+      });
+    });
+
+    // === Spell Cast Effect ===
+    function castSpell(x, y) {
+      spellEffect.classList.remove('hidden');
+      const beam = document.createElement('div');
+      beam.className = 'spell-beam';
+      beam.style.left = `${x}px`;
+      beam.style.top = `${y}px`;
+      spellEffect.appendChild(beam);
+      setTimeout(() => {
+        beam.remove();
+        if (spellEffect.children.length === 0) spellEffect.classList.add('hidden');
+      }, 900);
+    }
+
+    // === Wand Trail ===
+    document.addEventListener('mousemove', (e) => {
+      if (!trail) {
+        trail = document.createElement('div');
+        trail.className = 'wand-trail';
+        document.body.appendChild(trail);
+      }
+      const spark = document.createElement('div');
+      spark.className = 'wand-trail';
+      spark.style.left = `${e.pageX - 4}px`;
+      spark.style.top = `${e.pageY - 4}px`;
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 600);
+    });
+
+    // === Init ===
+    loadSection('home');
+  </script>
 </body>
 </html>

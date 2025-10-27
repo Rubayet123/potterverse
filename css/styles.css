@@ -1,0 +1,18 @@
+body {
+  background-image: url('../assets/images/hogwarts-bg.jpg'); /* Optional: Add a subtle Hogwarts background */
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-btn:hover {
+  transform: scale(1.05);
+}

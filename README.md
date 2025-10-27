@@ -9,7 +9,7 @@ A modern, interactive web app to explore the Harry Potter universe, powered by t
 - Responsive, modern design with a wizarding-world aesthetic.
 
 ## Deployment
-Hosted on GitHub Pages: [https://your-username.github.io/potterverse](https://your-username.github.io/potterverse)
+Hosted on GitHub Pages: [https://rubayet123.github.io/potterverse](https://rubayet123.github.io/potterverse)
 
 ## Setup
 1. Clone the repository:

@@ -5,6 +5,7 @@ const navButtons = document.querySelectorAll('.nav-btn');
 const homeSection = document.getElementById('home');
 const contentContainer = document.getElementById('content-container');
 let currentSection = 'home';
+let trail = null;
 
 async function fetchData(section, query = '') {
   try {
@@ -104,6 +105,21 @@ navButtons.forEach(button => {
     loadSection(button.dataset.section);
     searchInput.value = ''; // Clear search on section change
   });
+});
+
+// Wand Trail Effect
+document.addEventListener('mousemove', (e) => {
+  if (!trail) {
+    trail = document.createElement('div');
+    trail.className = 'wand-trail';
+    document.body.appendChild(trail);
+  }
+  trail.style.left = `${e.pageX - 5}px`;
+  trail.style.top = `${e.pageY - 5}px`;
+  trail.style.opacity = 1;
+  setTimeout(() => {
+    trail.style.opacity = 0;
+  }, 400);
 });
 
 loadSection('home');
